@@ -1,0 +1,15 @@
+version: '3'
+services:
+  stock_db:
+    image: postgres
+  rails:
+    depends_on:
+      - stock_db
+    build:
+      context: ./stock-manager
+      dockerfile: 'Dockerfile'
+    volumes:
+        - ./stock-manager/:/app
+    ports:
+      - "3000:3000"
+    command: bundle exec rails s -p 3000 -b '0.0.0.0'
