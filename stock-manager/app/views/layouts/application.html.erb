@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>App</title>
+    <title>Stock Manager</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -10,6 +10,13 @@
   </head>
 
   <body>
-    <%= yield %>
+    <%= render 'pages/header' %>
+    <div class='container'>
+      <% render 'layouts/alerts' %>
+      <% flash.each do | name, msg | %>
+        <% content_tag(:div, msg, class: "alert alert-info") %>
+      <% end %>
+      <%= yield %>
+      </div>
   </body>
 </html>

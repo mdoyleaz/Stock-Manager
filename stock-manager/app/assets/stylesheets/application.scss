@@ -13,3 +13,33 @@
  *= require_tree .
  *= require_self
  */
+$jumbotron-bg: #C9C5CB;
+$body-bg: #f2f5f9;
+
+@import 'bootstrap';
+
+.navbar{
+  background-color: #48435C;
+  margin-bottom: 5%;
+}
+
+.card-ends {
+  background-color: #e8e8e8;
+  padding: 10px;
+}
+
+.card-container {
+  width: auto;
+  margin: 0 auto;
+  float: none;
+  margin-bottom: 10px;
+  width: 50em;
+}
+
+
+.btn-default {
+  background-color: lightgray;
+}
+.btn-default:hover {
+  background-color: white;
+}

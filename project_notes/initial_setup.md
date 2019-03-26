@@ -1,7 +1,9 @@
 # Stock-Quotes - Ruby on Rails
 
 ### Build Dockerfiles
+
 #### Create `docker-compose.yml`
+
 Location: `./docker-compose.yml`
 
 Create two services, one for rails and one for our postgresql database.
@@ -25,10 +27,14 @@ services:
 ```
 
 #### Create rails Dockerfile
+
 Location: `stock-manager/Dockerfile`
-``` Dockerfile
+
+```Dockerfile
 FROM ruby:2.5
-RUN apt-get update -qq && apt-get install -y nodejs postgresql-client
+RUN apt-get update -qq && apt-get install -y postgresql-client
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - \
+        && apt-get install -y nodejs
 
 # Creates /app folder on container, and moves into that folder
 RUN mkdir /app
@@ -44,48 +50,59 @@ RUN bundle install
 # Copies all files in directory to container
 COPY . /app
 ```
----
+
+* * *
 
 ### Configure Rails
+
 Now that our Docker container
+
 #### Create Gemfile
+
 Location: `stock-manager/Gemfile`
+
 ```bash
 echo "source 'https://rubygems.org'
 gem 'rails', '~>5'" > stock-manager/Gemfile
 ```
 
 #### Create Gemfile.lock
+
 Location: `stock-manager/Gemfile.lock`
-``` bash
+
+```bash
 touch stock-manager/Gemfile.lock
 ```
 
 #### Create new rails project in container
-``` bash
+
+```bash
 docker-compose run rails rails new . --force --no-deps --database=postgresql
 ```
 
 #### Change ownership from `root` to current user
+
 This command needs to be run locally to modify the permissions since the rails project was created as `root` in the container. Without this the contents of our rails project wont beable to be modified outside the container
 
-``` bash
+```bash
 sudo chown -R $USER:$USER stock-manager/
 ```
 
 #### Rebuild container to move to new Gemfile
-``` bash
+
+```bash
 docker-compose build
 ```
 
----
+* * *
 
 ### Setting Up Database
 
 #### Modifications to `database.ym`
+
 Location: `stock-manager/config/database.yml`
 
-``` yaml
+```yaml
 default: &default
   adapter: postgresql
   encoding: unicode
@@ -96,14 +113,17 @@ default: &default
 ```
 
 #### Start Docker Containers
-``` bash
+
+```bash
 docker-compose up
 ```
 
 #### Create Database in `rails` Container
-``` bash
+
+```bash
 docker-compose run web rake db:create
 ```
 
 #### Finally
+
 Connect to `http://127.0.0.1:3000/` to make sure that everything went well and Rails is now up and running.
