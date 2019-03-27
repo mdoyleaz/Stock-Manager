@@ -22,14 +22,21 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 
 # Reduces boot times through caching; required in config/boot.rb
-gem 'bootsnap', '>= 1.1.0', require: false
+gem 'bootsnap', '~> 1.4.1', require: false
 
 # User Authentication
 gem 'devise'
+gem 'cancancan', '~> 2.0'
 
 # Bootstrap Template Styling
 gem 'bootstrap'
 gem 'jquery-rails'
+
+# Enviroment Variable Handler
+gem 'figaro'
+
+# HTTP Requests
+gem 'httparty'
 
 gem 'autoprefixer-rails'
 

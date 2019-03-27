@@ -4,8 +4,5 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  def is_manager?
-    self.current_user.try(:admin?)
-  end
 
 end

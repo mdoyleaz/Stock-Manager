@@ -2,6 +2,8 @@ version: '3'
 services:
   stock_db:
     image: postgres
+    ports:
+      - "5432:5432"
   rails:
     depends_on:
       - stock_db

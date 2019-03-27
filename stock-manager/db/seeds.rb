@@ -1,9 +1,18 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+# Create initial user
+# User.create(email: 'test@test.com', password: 'password', manager: true)
+# {ENV["STOCK_API_TOKEN"]}
 
-User.create(email: 'test@test.com', password: 'password', manager: true)
+# Create Initial Stocks
+def parse_stocks(response, endpoint)
+  JSON.parse(response.body)['data'].each do |res|
+    Stock.create('name': res['name'], 'symbol': res['symbol'], 'exchange': res['stock_exchange_short'], 'endpoint': endpoint % res['symbol'])
+  end
+end
+
+stock_symbols = ['AAPL', 'MSFT', 'TWTR', 'NFLX', 'HEAR', 'P', 'AMD', 'AAXN', 'AMZN', 'PANW', 'ADBE', 'TRIP', 'NTAP', 'EA', 'TTD', 'DDD', 'I', 'IQ', 'HUYA', 'MOMO', 'TWLO,CRM']
+
+stock_symbols.each_slice(5).to_a.each do |symbols|
+  ep = 'https://www.worldtradingdata.com/api/v1/stock?symbol=%s&api_token='
+  res = HTTParty.get(ep % symbols.join(',') << ENV['STOCK_API_TOKEN'])
+  parse_stocks(res, ep)
+end
