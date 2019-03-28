@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_28_031322) do
+ActiveRecord::Schema.define(version: 2019_03_28_075558) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,9 +18,11 @@ ActiveRecord::Schema.define(version: 2019_03_28_031322) do
   create_table "investments", force: :cascade do |t|
     t.integer "shares"
     t.float "initial_cost"
-    t.bigint "stock_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "portfolio_id"
+    t.bigint "stock_id"
+    t.index ["portfolio_id"], name: "index_investments_on_portfolio_id"
     t.index ["stock_id"], name: "index_investments_on_stock_id"
   end
 
@@ -28,7 +30,10 @@ ActiveRecord::Schema.define(version: 2019_03_28_031322) do
     t.float "total_investment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "user_id"
+    t.bigint "user_id"
+    t.bigint "investments_id"
+    t.index ["investments_id"], name: "index_portfolios_on_investments_id"
+    t.index ["user_id"], name: "index_portfolios_on_user_id"
   end
 
   create_table "stocks", force: :cascade do |t|
@@ -38,6 +43,7 @@ ActiveRecord::Schema.define(version: 2019_03_28_031322) do
     t.string "endpoint"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["symbol"], name: "index_stocks_on_symbol"
   end
 
   create_table "users", force: :cascade do |t|
@@ -49,9 +55,15 @@ ActiveRecord::Schema.define(version: 2019_03_28_031322) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "manager", default: false
-    t.integer "portfolio_id"
+    t.bigint "portfolio_id"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["portfolio_id"], name: "index_users_on_portfolio_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "investments", "portfolios"
+  add_foreign_key "investments", "stocks"
+  add_foreign_key "portfolios", "investments", column: "investments_id"
+  add_foreign_key "portfolios", "users"
+  add_foreign_key "users", "portfolios"
 end
