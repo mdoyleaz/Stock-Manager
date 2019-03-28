@@ -26,17 +26,20 @@ gem 'bootsnap', '~> 1.4.1', require: false
 
 # User Authentication
 gem 'devise'
-gem 'cancancan', '~> 2.0'
 
 # Bootstrap Template Styling
 gem 'bootstrap'
 gem 'jquery-rails'
+gem 'font-awesome-rails'
 
 # Enviroment Variable Handler
 gem 'figaro'
 
 # HTTP Requests
 gem 'httparty'
+
+# Admin Panel
+gem 'rails_admin'
 
 gem 'autoprefixer-rails'
 

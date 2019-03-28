@@ -4,6 +4,6 @@ class PagesController < ApplicationController
   end
 
   def home
-
+    puts "hi"
   end
 end

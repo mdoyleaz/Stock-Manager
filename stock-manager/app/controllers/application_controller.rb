@@ -1,8 +1,10 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
-  before_action :authenticate_user!
-  rescue_from CanCan::AccessDenied do | exception |
-    redirect_to root_url, alert: exception.message
+  def is_manager?
+    unless current_user.manager
+      flash[:error] = 'You must be logged in to access this section'
+      redirect_to root_url # halts request cycle
+    end
   end
 end
