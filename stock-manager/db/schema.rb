@@ -30,10 +30,8 @@ ActiveRecord::Schema.define(version: 2019_03_28_075558) do
     t.float "total_investment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "user_id"
     t.bigint "investments_id"
     t.index ["investments_id"], name: "index_portfolios_on_investments_id"
-    t.index ["user_id"], name: "index_portfolios_on_user_id"
   end
 
   create_table "stocks", force: :cascade do |t|
@@ -64,6 +62,5 @@ ActiveRecord::Schema.define(version: 2019_03_28_075558) do
   add_foreign_key "investments", "portfolios"
   add_foreign_key "investments", "stocks"
   add_foreign_key "portfolios", "investments", column: "investments_id"
-  add_foreign_key "portfolios", "users"
   add_foreign_key "users", "portfolios"
 end

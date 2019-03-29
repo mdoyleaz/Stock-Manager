@@ -1,4 +1,4 @@
 class Portfolio < ApplicationRecord
-  belongs_to :user
-  has_many :investments
+  has_one :user
+  has_many :investments, :foreign_key => "portfolio_id"
 end

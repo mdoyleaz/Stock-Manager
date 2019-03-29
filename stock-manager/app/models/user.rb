@@ -4,6 +4,6 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  has_one :portfolio, dependent: :destroy
+  belongs_to :portfolio, dependent: :destroy, :foreign_key => "portfolio_id"
   accepts_nested_attributes_for :portfolio
 end

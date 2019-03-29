@@ -1,13 +1,13 @@
 # Create initial user
-# Portfolio.create()
-# Portfolio.create()
-User.create(email: 'manager@test.com', password: 'password', manager: true)
-User.create(email: 'customer@test.com', password: 'password', manager: false)
+port1 = Portfolio.create()
+port2 = Portfolio.create()
+User.create(email: 'manager@test.com', password: 'password', manager: true, portfolio: port1)
+User.create(email: 'customer@test.com', password: 'password', manager: false, portfolio: port2)
 
 # # Create Initial Stocks
 def parse_stocks(response, endpoint)
   JSON.parse(response.body)['data'].each do |res|
-    Stock.create('name': res['name'], 'symbol': res['symbol'], 'exchange': res['stock_exchange_short'], 'endpoint': endpoint % res['symbol'])
+    puts Stock.create('name': res['name'], 'symbol': res['symbol'], 'exchange': res['stock_exchange_short'], 'endpoint': endpoint % res['symbol'])
   end
 end
 
