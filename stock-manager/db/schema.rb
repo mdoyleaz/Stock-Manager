@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_28_075558) do
+ActiveRecord::Schema.define(version: 2019_03_29_194056) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 2019_03_28_075558) do
     t.datetime "updated_at", null: false
     t.bigint "portfolio_id"
     t.bigint "stock_id"
+    t.integer "stock"
     t.index ["portfolio_id"], name: "index_investments_on_portfolio_id"
     t.index ["stock_id"], name: "index_investments_on_stock_id"
   end

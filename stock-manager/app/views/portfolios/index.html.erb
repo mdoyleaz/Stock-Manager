@@ -1,0 +1,32 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Portfolios</h1>
+
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Customer Email</th
+      <th scope="col"></th>
+      <th scope="col">Total Investment</th>
+      <th scope="col"># Investments</th>
+      <th scope="col" colspan="3" width=30%>Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @portfolios.each do |portfolio| %>
+      <tr>
+        <td><%= portfolio.user.email %></td>
+        <td><%= portfolio.total_investment %></td>
+        <td><%= portfolio.investments.length %></td>
+        <td> <%= link_to 'Show ', portfolio, class:"fa fa-eye" %></td>
+        <td><%= link_to 'Edit', edit_portfolio_path(portfolio), class:"fa fa-pencil-alt" %></td>
+        <td><%= link_to 'Destroy', portfolio, method: :delete, data: { confirm: 'Are you sure?' }, class:"fa fa-trash" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Portfolio', new_portfolio_path %>

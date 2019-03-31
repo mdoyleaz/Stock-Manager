@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+<h1>
+  Investments
+</h1>
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Company Name</th>
+      <th scope="col">Stock Symbol</th>
+      <th scope="col">Shares</th>
+      <th scope="col">Initial Price</th>
+      <th scope="col">Current Price</th>
+      <th scope="col">Current Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if @portfolio.investments.length > 0 %>
+      <% stock_response = get_stock_price %>
+        <% @portfolio.investments.each do |investment| %>
+          <tr>
+            <td>
+              <%= investment.stock.name %></td>
+            <td>
+              <%= investment.stock.symbol %></td>
+            <td>
+              <%= investment.shares %></td>
+            <td>
+              $<%= investment.initial_cost %></td>
+            <td>
+              $<%= stock_response[investment.stock.symbol]["price"] %>
+            </td>
+            <td><%= calculate_earnings(investment.shares, investment.initial_cost, stock_response[investment.stock.symbol]["price"]) %></td>
+          </tr>
+        <% end %>
+      <% end %>
+
+    </tbody>
+  </table>
+  <%= link_to 'Edit', edit_portfolio_path(@portfolio) %>
+  |
+  <%= link_to 'Back', portfolios_path %>

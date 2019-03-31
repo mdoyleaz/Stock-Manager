@@ -7,7 +7,7 @@ User.create(email: 'customer@test.com', password: 'password', manager: false, po
 # # Create Initial Stocks
 def parse_stocks(response, endpoint)
   JSON.parse(response.body)['data'].each do |res|
-    puts Stock.create('name': res['name'], 'symbol': res['symbol'], 'exchange': res['stock_exchange_short'], 'endpoint': endpoint % res['symbol'])
+    Stock.create('name': res['name'], 'symbol': res['symbol'], 'exchange': res['stock_exchange_short'], 'endpoint': endpoint % res['symbol'])
   end
 end
 
