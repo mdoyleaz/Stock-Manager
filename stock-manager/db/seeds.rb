@@ -1,8 +1,7 @@
 # Create initial user
-port1 = Portfolio.create()
-port2 = Portfolio.create()
-User.create(email: 'manager@test.com', password: 'password', manager: true, portfolio: port1)
-User.create(email: 'customer@test.com', password: 'password', manager: false, portfolio: port2)
+
+user_one = User.create(email: 'manager@test.com', password: 'password', manager: true)
+user_two = User.create(email: 'customer@test.com', password: 'password', manager: false)
 
 # # Create Initial Stocks
 def parse_stocks(response, endpoint)

@@ -1,5 +1,5 @@
 class PortfoliosController < ApplicationController
-  before_action :set_portfolio, only: [:show, :edit, :update, :destroy]
+  before_action :set_portfolio, only: %i[show add_investment update destroy]
 
   # GET /portfolios
   # GET /portfolios.json
@@ -9,23 +9,12 @@ class PortfoliosController < ApplicationController
 
   # GET /portfolios/1
   # GET /portfolios/1.json
-  def show
-  
-  end
-
-  # GET /portfolios/new
-  def new
-    @portfolio = Portfolio.new
-  end
-
-  # GET /portfolios/1/edit
-  def edit
-  end
+  def show; end
 
   # POST /portfolios
   # POST /portfolios.json
   def create
-    @portfolio = Portfolio.new(portfolio_params)
+    @portfolio = Portfolio.new
 
     respond_to do |format|
       if @portfolio.save
@@ -63,13 +52,14 @@ class PortfoliosController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_portfolio
-      @portfolio = Portfolio.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def portfolio_params
-      params.fetch(:portfolio, {})
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_portfolio
+    @portfolio = Portfolio.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def portfolio_params
+    params.fetch(:portfolio, {})
+  end
 end

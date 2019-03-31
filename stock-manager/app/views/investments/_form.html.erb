@@ -1,0 +1,14 @@
+<%= form_with(model: investment, local: true) do |form| %>
+<div class="form-field">
+  <%= form.label :stock %>
+  <%= form.select :stock, options_from_collection_for_select(Stock.all, :id, :name), class:'form-control, select' %>
+</div>
+<div class="form-field">
+<%= form.label :shares %>
+<%= form.text_field :shares %>
+</div>
+<%= form.hidden_field :portfolio, :value => params[:id]%>
+<div class="actions">
+<%= form.submit %>
+</div>
+<% end %>

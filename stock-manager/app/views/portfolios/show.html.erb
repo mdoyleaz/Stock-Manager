@@ -1,7 +1,12 @@
 <p id="notice"><%= notice %></p>
-<h1>
-  Investments
-</h1>
+<div class="container row">
+  <h1 class="col-xs-4">Investments</h1>
+  <% if current_user.manager %>
+    <%= link_to 'Add Investment', "/portfolios/#{@portfolio.id}/add", class:"ml-auto btn btn-default" %>
+  <% end %>
+</div>
+<p>Customer:
+  <%= @portfolio.user.email %></p>
 <table class="table">
   <thead class="thead-dark">
     <tr>
@@ -10,7 +15,7 @@
       <th scope="col">Shares</th>
       <th scope="col">Initial Price</th>
       <th scope="col">Current Price</th>
-      <th scope="col">Current Value</th>
+      <th scope="col">Gains/Losses</th>
     </tr>
   </thead>
   <tbody>
@@ -25,9 +30,9 @@
             <td>
               <%= investment.shares %></td>
             <td>
-              $<%= investment.initial_cost %></td>
+              <%= number_to_currency(investment.initial_cost) %></td>
             <td>
-              $<%= stock_response[investment.stock.symbol]["price"] %>
+              <%= number_to_currency(stock_response[investment.stock.symbol]["price"]) %>
             </td>
             <td><%= calculate_earnings(investment.shares, investment.initial_cost, stock_response[investment.stock.symbol]["price"]) %></td>
           </tr>
@@ -36,6 +41,6 @@
 
     </tbody>
   </table>
-  <%= link_to 'Edit', edit_portfolio_path(@portfolio) %>
-  |
-  <%= link_to 'Back', portfolios_path %>
+  <% if current_user.manager %>
+    <%= link_to 'Back', portfolios_path %>
+  <% end %>

@@ -9,7 +9,8 @@ module PortfoliosHelper
       response = query_symbols.map { |symbols| JSON.parse(HTTParty.get(ep % symbols).body)['data'] }.flatten
       response.map { |res| stock_hash[res['symbol']] = res }
     else
-      hashed_response[symbol] = JSON.parse(HTTParty.get(ep % symbol).body)['data']
+      stock_hash = JSON.parse(HTTParty.get(ep % symbol).body)['data'][0]
+      puts stock_hash
     end
 
     stock_hash
@@ -23,20 +24,20 @@ module PortfoliosHelper
       symbols_sliced = symbols_query.each_slice(5).to_a
       symbols = symbols_sliced.map { |sym| [sym.join(',')] }
     else
-      symbols = [symbols_arr.join(',')]
+      symbols = [symbols_query.join(',')]
     end
+
     symbols
   end
 
   # Performs caluclations for earnings based on current share price
   def calculate_earnings(shares, purchase_value, current_value)
-    earnings = (shares * current_value.to_i) - (shares * purchase_value)
 
-    if earnings > 0
-      "+$#{earnings.abs}"
+    if shares and purchase_value and current_value
+      earnings = (shares * current_value.to_f) - (shares * purchase_value)
     else
-      "-$#{earnings.abs}"
+      earnings = 0
     end
-
+    number_to_currency(earnings)
   end
 end

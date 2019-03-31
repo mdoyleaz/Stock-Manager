@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_29_194056) do
+ActiveRecord::Schema.define(version: 2019_03_31_053220) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,7 +22,6 @@ ActiveRecord::Schema.define(version: 2019_03_29_194056) do
     t.datetime "updated_at", null: false
     t.bigint "portfolio_id"
     t.bigint "stock_id"
-    t.integer "stock"
     t.index ["portfolio_id"], name: "index_investments_on_portfolio_id"
     t.index ["stock_id"], name: "index_investments_on_stock_id"
   end
@@ -31,8 +30,8 @@ ActiveRecord::Schema.define(version: 2019_03_29_194056) do
     t.float "total_investment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "investments_id"
-    t.index ["investments_id"], name: "index_portfolios_on_investments_id"
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_portfolios_on_user_id"
   end
 
   create_table "stocks", force: :cascade do |t|
@@ -54,14 +53,11 @@ ActiveRecord::Schema.define(version: 2019_03_29_194056) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "manager", default: false
-    t.bigint "portfolio_id"
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["portfolio_id"], name: "index_users_on_portfolio_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "investments", "portfolios"
   add_foreign_key "investments", "stocks"
-  add_foreign_key "portfolios", "investments", column: "investments_id"
-  add_foreign_key "users", "portfolios"
+  add_foreign_key "portfolios", "users"
 end

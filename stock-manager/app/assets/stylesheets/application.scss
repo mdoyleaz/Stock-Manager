@@ -43,8 +43,24 @@ body{
 
 .btn-default {
   background-color: lightgray;
+  height: 15%;
 }
 
 .btn-default:hover {
-  background-color: white;
+  background-color: gray;
+  border-color: none;
+}
+
+.fa {
+  color: #48435C;
+}
+
+.fa:hover {
+  color: #8980ad;
+    text-decoration: none;
+}
+
+
+a:hover {
+  text-decoration: underline;
 }
