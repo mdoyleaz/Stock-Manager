@@ -4,9 +4,9 @@ user_one = User.create(email: 'manager@test.com', password: 'password', manager:
 user_two = User.create(email: 'customer@test.com', password: 'password', manager: false)
 
 # # Create Initial Stocks
-def parse_stocks(response, endpoint)
+def parse_stocks(response)
   JSON.parse(response.body)['data'].each do |res|
-    Stock.create('name': res['name'], 'symbol': res['symbol'], 'exchange': res['stock_exchange_short'], 'endpoint': endpoint % res['symbol'])
+    Stock.create('name': res['name'], 'symbol': res['symbol'], 'exchange': res['stock_exchange_short'])
   end
 end
 
@@ -18,5 +18,5 @@ stock_symbols = ['AAPL', 'MSFT', 'TWTR', 'NFLX', 'HEAR',
 stock_symbols.each_slice(5).to_a.each do |symbols|
   ep = 'https://www.worldtradingdata.com/api/v1/stock?symbol=%s&api_token='
   res = HTTParty.get(ep % symbols.join(',') << ENV['STOCK_API_TOKEN'])
-  parse_stocks(res, ep)
+  parse_stocks(res)
 end

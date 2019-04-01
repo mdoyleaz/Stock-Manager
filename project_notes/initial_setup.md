@@ -1,4 +1,4 @@
-# Stock-Quotes - Ruby on Rails
+# Initial Setup
 
 ### Build Dockerfiles
 
@@ -62,7 +62,7 @@ Now that our Docker container
 Location: `stock-manager/Gemfile`
 
 ```bash
-echo "source 'https://rubygems.org'
+$ echo "source 'https://rubygems.org'
 gem 'rails', '~>5'" > stock-manager/Gemfile
 ```
 
@@ -77,21 +77,21 @@ touch stock-manager/Gemfile.lock
 #### Create new rails project in container
 
 ```bash
-docker-compose run rails rails new . --force --no-deps --database=postgresql
+$ docker-compose run rails rails new . --force --no-deps --database=postgresql
 ```
 
 #### Change ownership from `root` to current user
 
-This command needs to be run locally to modify the permissions since the rails project was created as `root` in the container. Without this the contents of our rails project wont beable to be modified outside the container
+This command needs to be run locally to modify the permissions since the rails project was created as `root` in the container. Without this the contents of our rails project wont be able to be modified outside the container
 
 ```bash
-sudo chown -R $USER:$USER stock-manager/
+$ sudo chown -R $USER:$USER stock-manager/
 ```
 
 #### Rebuild container to move to new Gemfile
 
 ```bash
-docker-compose build
+$ docker-compose build
 ```
 
 * * *
@@ -115,13 +115,13 @@ default: &default
 #### Start Docker Containers
 
 ```bash
-docker-compose up
+$ docker-compose up
 ```
 
 #### Create Database in `rails` Container
 
 ```bash
-docker-compose run web rake db:create
+$ docker-compose run web rake db:create
 ```
 
 #### Finally
