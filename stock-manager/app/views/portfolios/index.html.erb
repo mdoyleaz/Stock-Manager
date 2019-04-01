@@ -9,7 +9,7 @@
     <tr>
       <th scope="col">Customer Email</th <th scope="col">
     </th>
-    <th scope="col">Total Investment</th>
+    <th scope="col">Total Investments</th>
     <th scope="col"># Investments</th>
     <th scope="col" colspan="3" width="30%">Actions</th>
   </tr>
@@ -20,7 +20,7 @@
     <% if !portfolio.user.manager %>
       <tr>
         <td><%= portfolio.user.email %></td>
-        <td><%= portfolio.total_investment %></td>
+        <td><%= number_to_currency(portfolio.total_investment) %></td>
         <td><%= portfolio.investments.length %></td>
         <td>
         <%= link_to 'Show ', portfolio, class:"fa fa-eye" %>

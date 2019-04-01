@@ -18,7 +18,9 @@ class InvestmentsController < ApplicationController
         current_stock_value = helpers.get_stock_price(@investment.stock.symbol)['price']
 
         @investment.initial_cost = current_stock_value
-        @investment.portfolio.total_investment = @investment.portfolio.total_investment + (current_stock_value.to_f * investment_params[:shares].to_f)
+        portfolio = Portfolio.find(investment_params[:portfolio])
+        total_investment = portfolio.total_investment + (current_stock_value.to_f * investment_params[:shares].to_f)
+        portfolio.update(total_investment: total_investment )
       end
       if @investment.save
         format.html { redirect_to "/portfolios/#{investment_params[:portfolio]}", notice: 'Investment was successfully created.' }
