@@ -6,7 +6,7 @@ For our user authentication, we are going to add a couple of roles, one for `Por
 
 #### Role Permissions
 
--   `Portfolio Manager`: This role is going to have write access to the database, and have the ability to modify customers accounts. This will essentially be our `Admin` role.
+-   `Portfolio Manager`: This role is going to have write access to the database, and have the abilitiy to modify customers accounts. This will essentially be our `Admin` role.
 -   `Customer`: This role is only going to posses read access to their specific account.
 
 * * *
@@ -132,11 +132,16 @@ Now that we have this in place, we can add a a simple command to provide the opt
 
 ```ruby
 def initialize(user)
-    user ||= User.new # guest user (not logged in)
-    if user.manager?
-      can :manage, :all
-    else
-      can :read, :all
-    end
+  if user.manager
+    can :manage, :all
+  else
+     can :read, Portfolio do |portfolio|
+       portfolio.user == user
+     end
+      can :read, User do |user|
+        user == user
+      end
+     cannot :manage, Investment
+  end
 end
 ```
