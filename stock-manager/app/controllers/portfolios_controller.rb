@@ -1,5 +1,6 @@
 class PortfoliosController < ApplicationController
-  before_action :set_portfolio, only: %i[show add_investment update destroy]
+  load_and_authorize_resource
+  before_action :set_portfolio, only: %i[show update destroy]
 
   # GET /portfolios
   # GET /portfolios.json

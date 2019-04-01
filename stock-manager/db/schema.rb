@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 2019_03_31_053220) do
   end
 
   create_table "portfolios", force: :cascade do |t|
-    t.float "total_investment"
+    t.float "total_investment", default: 0.0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id"
@@ -38,7 +38,6 @@ ActiveRecord::Schema.define(version: 2019_03_31_053220) do
     t.string "name"
     t.string "symbol"
     t.string "exchange"
-    t.string "endpoint"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["symbol"], name: "index_stocks_on_symbol"

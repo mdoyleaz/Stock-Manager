@@ -1,16 +1,12 @@
 class StocksController < ApplicationController
-  before_action :set_stock, only: %i[show edit update destroy]
+  load_and_authorize_resource
+  before_action :set_stock, only: %i[edit update destroy]
 
   # GET /stocks
   # GET /stocks.json
   def index
     @stocks = Stock.all
-  
   end
-
-  # GET /stocks/1
-  # GET /stocks/1.json
-  def show; end
 
   # GET /stocks/new
   def new
@@ -23,7 +19,6 @@ class StocksController < ApplicationController
   # POST /stocks
   # POST /stocks.json
   def create
-    stock_data = request_stock_details(stock_params['symbol'])
     @stock = Stock.new(stock_params)
 
     respond_to do |format|
@@ -65,11 +60,12 @@ class StocksController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_stock
+    puts params[:id]
     @stock = Stock.find(params[:id])
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def stock_params
-    params.require(:stock).permit(:name, :symbol, :exchange, :endpoint)
+    params.require(:stock).permit(:id, :name, :symbol, :exchange, :endpoint)
   end
 end

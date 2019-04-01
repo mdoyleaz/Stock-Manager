@@ -1,25 +1,11 @@
 class InvestmentsController < ApplicationController
+  # load_and_authorize_resource
   before_action :set_investment, only: %i[show edit update destroy]
 
-  # GET /investments
-  # GET /investments.json
-  def index
-    @investments = Investment.all
-  end
-
-  # GET /investments/1
-  # GET /investments/1.json
-  def show; end
-
   # GET /investments/new
-  def new
-  end
-
-  # GET /investments/1/edit
-  def edit; end
+  def new; end
 
   # POST /investments
-  # POST /investments.json
   def create
     @investment = Investment.new
 
@@ -32,7 +18,7 @@ class InvestmentsController < ApplicationController
         current_stock_value = helpers.get_stock_price(@investment.stock.symbol)['price']
 
         @investment.initial_cost = current_stock_value
-
+        @investment.portfolio.total_investment = @investment.portfolio.total_investment + (current_stock_value.to_f * investment_params[:shares].to_f)
       end
       if @investment.save
         format.html { redirect_to "/portfolios/#{investment_params[:portfolio]}", notice: 'Investment was successfully created.' }
